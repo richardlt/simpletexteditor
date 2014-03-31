@@ -1,35 +1,34 @@
 package miniEditeur;
 
-public class ZoneDeTravail{
-	
+public class ZoneDeTravail {
+
+	/**
+	 * Constructor of PressePapier
+	 */
 	private PressePapier pressePapier;
 	private Selection selection;
-	private EditeurDeTexte editeurDeTexte;
 	private Buffer buffer;
-	
-	public ZoneDeTravail(){
-		super();
+
+	public ZoneDeTravail(EditeurDeTexte e) {
+		this.buffer 		= new Buffer();
+		this.pressePapier 	= new PressePapier();
+		this.selection 		= new Selection();
 	}
 
 	public boolean copier() {
-		// TODO : to implement
-		return false;	
+		return false;
 	}
-	
-	public boolean couper() {
-		// TODO : to implement
-		return false;	
-	}
-	
-	public boolean ecrire() {
-		// TODO : to implement
-		return false;	
-	}
-	
-	public boolean coller() {
-		// TODO : to implement
-		return false;	
-	}
-	
-}
 
+	public boolean couper() {
+		return false;
+	}
+
+	public boolean ecrire() {
+		return false;
+	}
+
+	public boolean coller() {
+		return false;
+	}
+
+}
