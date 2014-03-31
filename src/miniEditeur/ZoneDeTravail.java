@@ -1,106 +1,34 @@
 package miniEditeur;
 
+public class ZoneDeTravail {
 
-/**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
- */
+	/**
+	 * Constructor of PressePapier
+	 */
+	private PressePapier pressePapier;
+	private Selection selection;
+	private Buffer buffer;
 
-public class ZoneDeTravail
-{
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public PressePapier pressePapier;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Selection selection;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public EditeurDeTexte editeurDeTexte;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public Buffer buffer;
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
-	public ZoneDeTravail(){
-		super();
+	public ZoneDeTravail(EditeurDeTexte e) {
+		this.buffer 		= new Buffer();
+		this.pressePapier 	= new PressePapier();
+		this.selection 		= new Selection();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
 	public boolean copier() {
-		// TODO : to implement
-		return false;	
+		return false;
 	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean couper() {
-		// TODO : to implement
-		return false;	
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean ecrire() {
-		// TODO : to implement
-		return false;	
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean coller() {
-		// TODO : to implement
-		return false;	
-	}
-	
-}
 
+	public boolean couper() {
+		return false;
+	}
+
+	public boolean ecrire() {
+		return false;
+	}
+
+	public boolean coller() {
+		return false;
+	}
+
+}
