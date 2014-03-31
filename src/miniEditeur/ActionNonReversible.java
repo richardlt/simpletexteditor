@@ -47,16 +47,6 @@ public abstract class ActionNonReversible implements Action
 		// TODO : to implement	
 	}
 	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public void executer() {
-		// TODO : to implement	
-	}
 	
 }
 
