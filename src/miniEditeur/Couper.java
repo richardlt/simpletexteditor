@@ -2,8 +2,8 @@ package miniEditeur;
 
 public class Couper extends ActionReversible{
 	
-	public Couper(){
-		super();
+	public Couper(EditeurDeTexte e){
+		super(e);
 	}
 
 	public void executer() {

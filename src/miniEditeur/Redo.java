@@ -2,12 +2,12 @@ package miniEditeur;
 
 public class Redo extends ActionNonReversible{
 	
-	public Redo(){
-		super();
+	public Redo(EditeurDeTexte e){
+		super(e);
 	}
 
 	public void executer() {
-		// TODO : to implement	
+		
 	}
 	
 }

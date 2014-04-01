@@ -6,5 +6,9 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 		super();
 	}
 
+	public void run() {
+		
+	}
+
 }
 

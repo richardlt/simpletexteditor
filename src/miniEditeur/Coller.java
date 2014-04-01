@@ -2,8 +2,8 @@ package miniEditeur;
 
 public class Coller extends ActionReversible{
 	
-	public Coller(){
-		super();
+	public Coller(EditeurDeTexte e){
+		super(e);
 	}
 
 	public void executer() {

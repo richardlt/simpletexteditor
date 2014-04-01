@@ -7,6 +7,8 @@ public class Selection{
 	
 	public Selection(){
 		super();
+		indexDebut=0;
+		indexFin=0;
 	}
 
 }

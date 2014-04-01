@@ -7,8 +7,10 @@ public abstract class ActionReversible implements Action{
 	private ZoneDeTravail zoneDeTravail;	
 	private EditeurDeTexte editeurDeTexte;
 	
-	public ActionReversible(){
+	public ActionReversible(EditeurDeTexte e){
 		super();
+		editeurDeTexte=e;
+		zoneDeTravail=e.getZoneDeTravail();
 	}
 
 	public void executer() {

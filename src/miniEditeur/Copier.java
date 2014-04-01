@@ -2,8 +2,8 @@ package miniEditeur;
 
 public class Copier extends ActionReversible{
 	
-	public Copier(){
-		super();
+	public Copier(EditeurDeTexte e){
+		super(e);
 	}
 
 	public void executer() {

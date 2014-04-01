@@ -5,8 +5,9 @@ public abstract class ActionNonReversible implements Action{
 	private ActionReversible actionReversible;	
 	private EditeurDeTexte editeurDeTexte;
 	
-	public ActionNonReversible(){
+	public ActionNonReversible(EditeurDeTexte e){
 		super();
+		editeurDeTexte=e;
 	}
 
 	public void executer() {
