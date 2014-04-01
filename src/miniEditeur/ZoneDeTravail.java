@@ -31,4 +31,31 @@ public class ZoneDeTravail {
 		return false;
 	}
 
+	// Class ZoneDeTravail's accessors
+	
+	public PressePapier getPressePapier() {
+		return this.pressePapier;
+	}
+
+	public void setPressePapier(PressePapier pressePapier) {
+		this.pressePapier = pressePapier;
+	}
+
+	public Selection getSelection() {
+		return this.selection;
+	}
+
+	public void setSelection(Selection selection) {
+		this.selection = selection;
+	}
+
+	public Buffer getBuffer() {
+		return this.buffer;
+	}
+
+	public void setBuffer(Buffer buffer) {
+		this.buffer = buffer;
+	}	
+	
+
 }
