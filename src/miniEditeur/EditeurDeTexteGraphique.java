@@ -89,7 +89,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 
 			// Get selected text in the text area
 			public void mouseReleased(MouseEvent arg0) {
-				System.out.println(zdt.getSelectedText());
+				if(zdt.getSelectedText() != null)
+					System.out.println(zdt.getSelectedText());
 			}
 		};
 		

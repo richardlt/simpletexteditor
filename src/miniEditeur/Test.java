@@ -4,7 +4,9 @@ public class Test {
 
 	public static void main(String[] args) {
 		EditeurDeTexte edtg = new EditeurDeTexteGraphique();
-		edtg.run();
+		edtg.start();
+		EditeurDeTexte edtt = new EditeurDeTexteTextuelle();
+		edtt.start();
 	}
 
 }
