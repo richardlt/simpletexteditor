@@ -6,13 +6,11 @@ public class Copier extends ActionReversible{
 		super(e);
 	}
 
-	public void executer() {
-		// TODO : to implement	
+	public void executer(){
+		super.zoneDeTravail.copier();
 	}
 	
-	public void annuler() {
-		// TODO : to implement	
-	}
+	public void annuler(){}
 	
 }
 

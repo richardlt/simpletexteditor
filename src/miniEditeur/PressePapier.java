@@ -6,6 +6,11 @@ public class PressePapier{
 	
 	public PressePapier(){
 		super();
+		buffer=new Buffer();
+	}
+	
+	public setValue(){
+		buffer=new Buffer();	
 	}
 
 }

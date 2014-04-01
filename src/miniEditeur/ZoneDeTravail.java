@@ -16,6 +16,7 @@ public class ZoneDeTravail {
 	}
 
 	public boolean copier() {
+		this.pressePapier.set();
 		return false;
 	}
 
@@ -23,8 +24,9 @@ public class ZoneDeTravail {
 		return false;
 	}
 
-	public boolean ecrire() {
-		return false;
+	public boolean ecrire(String text) {
+		this.buffer.insert(text);
+		return true;
 	}
 
 	public boolean coller() {
@@ -56,6 +58,10 @@ public class ZoneDeTravail {
 	public void setBuffer(Buffer buffer) {
 		this.buffer = buffer;
 	}	
+	
+	public String toString(){
+		return this.buffer.toString();
+	}
 	
 
 }

@@ -5,6 +5,8 @@ public abstract class EditeurDeTexte extends Thread{
 	
 	private ArrayList<Action> actionList;
 	private ZoneDeTravail zoneDeTravail;
+	
+	private String tampon;
 
 	public EditeurDeTexte(){
 		super();
@@ -16,6 +18,26 @@ public abstract class EditeurDeTexte extends Thread{
 	
 	public ZoneDeTravail getZoneDeTravail(){
 		return zoneDeTravail;
+	}
+	
+	public String getTampon(){
+		String result=tampon.toString();
+		tampon="";
+		return result;
+	}
+	
+	public void setTampon(String text){
+		tampon=text;
+	}
+	
+	public void setSelection(Integer start, Integer end){
+		Selection s=zoneDeTravail.getSelection();
+		s.setIndexDebut(start);
+		s.setIndexFin(end);
+	}
+		
+	public String toString(){
+		return zoneDeTravail.toString();
 	}
 }
 
