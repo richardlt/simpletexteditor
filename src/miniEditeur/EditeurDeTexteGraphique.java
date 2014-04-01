@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.dnd.DragGestureListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
@@ -34,6 +36,42 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 		
 		JPanel grid = new JPanel();
 		grid.setLayout(new GridLayout(1, 5));
+		
+		buttonCopy.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("click copier");
+			}
+		});
+		
+		buttonCut.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("click couper");
+			}
+		});
+		
+		buttonPaste.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("click coller");
+			}
+		});
+		
+		buttonUndo.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("click annuler");
+			}
+		});
+		
+		buttonRedo.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("click refaire");
+			}
+		});
+		
 		
 		grid.add(buttonCopy);
 		grid.add(buttonCut);

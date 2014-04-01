@@ -6,7 +6,8 @@ public class Ecrire extends ActionReversible{
 		super(e);
 	}
 	public void executer() {
-		
+		String tampon=super.editeurDeTexte.getTampon();
+		super.zoneDeTravail.ecrire(tampon);
 	}
 	
 	public void annuler() {

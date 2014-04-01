@@ -4,8 +4,8 @@ public abstract class ActionReversible implements Action{
 	
 	private int attribute;
 	private Buffer buffer;	
-	private ZoneDeTravail zoneDeTravail;	
-	private EditeurDeTexte editeurDeTexte;
+	protected ZoneDeTravail zoneDeTravail;	
+	protected EditeurDeTexte editeurDeTexte;
 	
 	public ActionReversible(EditeurDeTexte e){
 		super();

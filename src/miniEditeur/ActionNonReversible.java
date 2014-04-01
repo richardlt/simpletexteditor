@@ -3,7 +3,7 @@ package miniEditeur;
 public abstract class ActionNonReversible implements Action{
 	
 	private ActionReversible actionReversible;	
-	private EditeurDeTexte editeurDeTexte;
+	protected EditeurDeTexte editeurDeTexte;
 	
 	public ActionNonReversible(EditeurDeTexte e){
 		super();
