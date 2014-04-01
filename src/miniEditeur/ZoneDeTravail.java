@@ -23,7 +23,8 @@ public class ZoneDeTravail {
 		return false;
 	}
 
-	public boolean ecrire() {
+	public boolean ecrire(String text) {
+		this.buffer.insert(text);
 		return false;
 	}
 
@@ -56,6 +57,10 @@ public class ZoneDeTravail {
 	public void setBuffer(Buffer buffer) {
 		this.buffer = buffer;
 	}	
+	
+	public String toString(){
+		return this.buffer.toString();
+	}
 	
 
 }
