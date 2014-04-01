@@ -17,9 +17,9 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 			System.out.println("Que voulez vous faire ?");
 			System.out.println("e : écrire du texte");
 			System.out.println("s : selectionner du texte");
-			System.out.println("cp : copier la selection");
-			System.out.println("p : coller la selection");
-			System.out.println("cu : couper la selection");
+			System.out.println("cp : copier la selection (précisez la selection avant de copier)");
+			System.out.println("p : coller la selection (précisez la selection avant de coller)");
+			System.out.println("cu : couper la selection (précisez la selection avant de couper)");
 			System.out.println("u : defaire");
 			System.out.println("r : refaire");
 			
@@ -39,15 +39,20 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 				Integer end = sc.nextInt();
 				setSelection(start, end);
 			}else if(str.equals("cp")){
-				
+				Action a=new Copier(this);
+				a.executer();
 			}else if(str.equals("p")){
-				
+				Action a=new Coller(this);
+				a.executer();
 			}else if(str.equals("cu")){
-				
+				Action a=new Couper(this);
+				a.executer();
 			}else if(str.equals("u")){
-				
+				Action a=new Undo(this);
+				a.executer();
 			}else if(str.equals("r")){
-				
+				Action a=new Redo(this);
+				a.executer();
 			}
 		}
 	}

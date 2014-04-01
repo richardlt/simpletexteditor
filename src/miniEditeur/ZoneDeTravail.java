@@ -16,6 +16,7 @@ public class ZoneDeTravail {
 	}
 
 	public boolean copier() {
+		this.pressePapier.set();
 		return false;
 	}
 
@@ -25,7 +26,7 @@ public class ZoneDeTravail {
 
 	public boolean ecrire(String text) {
 		this.buffer.insert(text);
-		return false;
+		return true;
 	}
 
 	public boolean coller() {
