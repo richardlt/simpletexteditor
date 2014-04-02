@@ -37,38 +37,46 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 		JPanel grid = new JPanel();
 		grid.setLayout(new GridLayout(1, 5));
 		
+		// Rendre l'accès à l'éditeur de texte graphique dans les listeners
+		final EditeurDeTexte edt = this;
+		
 		buttonCopy.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("click copier");
+				Copier copier = new Copier(edt);
+				copier.executer();				
 			}
 		});
 		
 		buttonCut.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("click couper");
+				Couper couper = new Couper(edt);
+				couper.executer();
 			}
 		});
 		
 		buttonPaste.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("click coller");
+				Coller coller = new Coller(edt);
+				coller.executer();
 			}
 		});
 		
 		buttonUndo.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("click annuler");
+				Undo undo = new Undo(edt);
+				undo.executer();
 			}
 		});
 		
 		buttonRedo.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("click refaire");
+				Redo redo = new Redo(edt);
+				redo.executer();
 			}
 		});
 		
@@ -88,7 +96,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 			public void mousePressed(MouseEvent arg0) {}
 
 			// Get selected text in the text area
-			public void mouseReleased(MouseEvent arg0) {
+			public void mouseReleased(MouseEvent e) {
 				if(zdt.getSelectedText() != null)
 					System.out.println(zdt.getSelectedText());
 			}
