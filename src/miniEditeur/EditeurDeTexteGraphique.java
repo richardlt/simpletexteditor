@@ -20,16 +20,23 @@ import javax.swing.JTextArea;
 
 public class EditeurDeTexteGraphique extends EditeurDeTexte{
 
+	/**
+	 * Constructor of the EditeurDeTexteGraphique's class
+	 */
 	public EditeurDeTexteGraphique(){
 		super();
 	}
-
+	
+	/**
+	 * Method called by the main function to print the UI
+	 */
 	public void run() {
 		JFrame fenetre = new JFrame();
 		fenetre.setSize(800, 600);
 		fenetre.setPreferredSize(fenetre.getSize());
 		fenetre.setLayout(new BorderLayout());
 		
+		// Configuration of action buttons 
 		JButton buttonCopy 	= new JButton("Copier"); 	buttonCopy.setSize(30, 20); 	buttonCopy.setBackground(Color.BLACK); 	buttonCopy.setForeground(Color.WHITE);
 		JButton buttonCut 	= new JButton("Couper"); 	buttonCut.setSize(30, 20);		buttonCut.setBackground(Color.BLUE);	buttonCut.setForeground(Color.WHITE);
 		JButton buttonPaste = new JButton("Coller"); 	buttonPaste.setSize(30, 20);	buttonPaste.setBackground(Color.RED);
@@ -39,9 +46,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 		JPanel grid = new JPanel();
 		grid.setLayout(new GridLayout(1, 5));
 		
-		// Rendre l'accès à l'éditeur de texte graphique dans les listeners
+		// Give access to the editor object in the listeners
 		final EditeurDeTexte edt = this;
 		
+		// Add of action listener on every button created up there
 		buttonCopy.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
@@ -90,6 +98,9 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 		
 		final JTextArea zdt = new JTextArea();	zdt.setBackground(Color.WHITE);
 		
+		/**
+		 * Constructor of the internal class MyKeyListener to handle writing events
+		 */
 		class MyKeyListener implements KeyListener{
 
 			@Override
@@ -108,6 +119,9 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte{
 			
 		}
 		
+		/**
+		 * Constructor of the internal class MyMouseListener to handle selection events
+		 */
 		class MyMouseListener implements MouseListener {
 			
 			private int startIndex, endIndex;
