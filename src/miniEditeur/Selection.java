@@ -12,6 +12,7 @@ public class Selection{
 		super();
 		this.indexDebut=0;
 		this.indexFin=0;
+		//selecton qui a le meme index debut et fin est un curseur
 	}
 	
 	// Class Selection's accessors 
@@ -30,6 +31,10 @@ public class Selection{
 	
 	public int getIndexFin(){
 		return this.indexFin;
+	}
+
+	public void toCursor() {
+		this.indexFin=this.indexDebut;		
 	}
 
 }

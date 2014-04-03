@@ -16,6 +16,8 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Que voulez vous faire ?");
 			System.out.println("e : écrire du texte");
+			System.out.println("ret : supprime la selection ou le caractere precedent");
+			System.out.println("suppr : effacer la selection");
 			System.out.println("s : selectionner du texte");
 			System.out.println("cp : copier la selection (précisez la selection avant de copier)");
 			System.out.println("p : coller la selection (précisez la selection avant de coller)");
@@ -31,6 +33,12 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 				System.out.println("Ecrivez votre texte");
 				String text = sc.nextLine();
 				setTampon(text);
+				a.executer();
+			}else if(str.equals("ret")){	
+				Action a=new RetourArriere(this);
+				a.executer();
+			}else if(str.equals("suppr")){	
+				Action a=new Suppr(this);
 				a.executer();
 			}else if(str.equals("s")){	
 				System.out.println("Ecrivez l'index de début de la sélection");
