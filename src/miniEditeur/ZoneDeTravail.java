@@ -16,8 +16,8 @@ public class ZoneDeTravail {
 	}
 
 	public boolean copier() {
-		this.pressePapier.set();
-		return false;
+		this.pressePapier.setValue(this.buffer.getInterval(this.selection));
+		return true;
 	}
 
 	public boolean couper() {
@@ -25,12 +25,22 @@ public class ZoneDeTravail {
 	}
 
 	public boolean ecrire(String text) {
-		this.buffer.insert(text);
+		Buffer newT=new Buffer(text.getBytes());
+		this.buffer.replaceInterval(newT, this.selection);
+		this.selection.setIndexDebut(this.selection.getIndexDebut()+newT.size());
+		this.selection.toCursor();
 		return true;
 	}
 
-	public boolean coller() {
-		return false;
+	public boolean coller(){
+		this.buffer.remove(this.selection.getIndexDebut(), this.selection.getIndexFin()-this.selection.getIndexDebut());
+		this.selection.toCursor();
+		this.buffer.insertInto(this.pressePapier.getBuffer(), this.selection.getIndexDebut());
+		return true;
+	}
+
+	public void effacer() {
+				
 	}
 
 	// Class ZoneDeTravail's accessors
@@ -60,8 +70,26 @@ public class ZoneDeTravail {
 	}	
 	
 	public String toString(){
-		return this.buffer.toString();
+		String temp="";
+		for(int i=0;i<=this.buffer.size();i++){
+			if(this.selection.getIndexDebut()<=i && i<=this.selection.getIndexFin()){
+				temp+="^";
+			}else{
+				temp+=" ";
+			}
+		}
+		return "Presse papier : "+this.pressePapier.toString()+"\n"+this.buffer.toString()+"\n"+temp;
+		
 	}
-	
+
+	public void retourArriere() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void suppr() {
+		// TODO Auto-generated method stub
+		
+	}	
 
 }

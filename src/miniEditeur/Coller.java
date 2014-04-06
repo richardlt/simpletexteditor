@@ -7,7 +7,7 @@ public class Coller extends ActionReversible{
 	}
 
 	public void executer() {
-		// TODO : to implement	
+		super.zoneDeTravail.coller();
 	}
 	
 	public void annuler() {
