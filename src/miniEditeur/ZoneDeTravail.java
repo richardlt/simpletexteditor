@@ -40,7 +40,7 @@ public class ZoneDeTravail {
 	}
 
 	public void effacer() {
-				
+            
 	}
 
 	// Class ZoneDeTravail's accessors
@@ -83,9 +83,12 @@ public class ZoneDeTravail {
 	}
 
 	public void retourArriere() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
+        
+        public void refaire(){
+            
+        }
 
 	public void suppr() {
 		// TODO Auto-generated method stub

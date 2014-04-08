@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package miniEditeur;
 
 import java.util.Scanner;
@@ -65,4 +66,6 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 		}
 	}
 
-}
+=======
+package miniEditeur;
+

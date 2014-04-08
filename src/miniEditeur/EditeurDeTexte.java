@@ -4,8 +4,7 @@ import java.util.ArrayList;
 public abstract class EditeurDeTexte extends Thread{
 	
 	private ArrayList<Action> actionList;
-	private ZoneDeTravail zoneDeTravail;
-	
+	private ZoneDeTravail zoneDeTravail;	
 	private String tampon;
 
 	public EditeurDeTexte(){
@@ -21,7 +20,7 @@ public abstract class EditeurDeTexte extends Thread{
 	}
 	
 	public String getTampon(){
-		String result=tampon.toString();
+		String result=tampon;
 		tampon="";
 		return result;
 	}
