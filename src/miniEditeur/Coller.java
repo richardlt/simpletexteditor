@@ -12,8 +12,7 @@ public class Coller extends ActionReversible {
     }
 
     /**
-     * Method that send an order to paste the selection in into the
-     * Paper Press
+     * Method that send an order to paste the selection in into the Paper Press
      */
     public void executer() {
         super.zoneDeTravail.coller();
