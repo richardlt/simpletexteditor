@@ -132,7 +132,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyCode() != KeyEvent.VK_DELETE) {
                     Ecrire ecrire = new Ecrire(edt);
-                    //ecrire.executer();
+                    ecrire.executer();
                 }
             }
 
