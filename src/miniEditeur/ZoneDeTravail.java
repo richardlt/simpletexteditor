@@ -40,7 +40,7 @@ public class ZoneDeTravail {
 	}
 
 	public void effacer() {
-				
+            
 	}
 
 	// Class ZoneDeTravail's accessors
