@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package miniEditeur;
 
 public class Ecrire extends ActionReversible{
@@ -24,24 +23,3 @@ public class Ecrire extends ActionReversible{
 	}
 	
 }
-
-=======
-package miniEditeur;
-
-public class Ecrire extends ActionReversible{
-	
-	public Ecrire(EditeurDeTexte e){
-		super(e);
-	}
-	public void executer() {
-		String tampon=super.editeurDeTexte.getTampon();
-		super.zoneDeTravail.ecrire(tampon);
-	}
-	
-	public void annuler() {
-		
-	}
-	
-}
-
->>>>>>> branch 'master' of https://github.com/richardlt/simpletexteditor.git
