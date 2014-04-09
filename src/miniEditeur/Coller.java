@@ -22,7 +22,7 @@ public class Coller extends ActionReversible {
      * Procedure to cancel effects of the paste action (unprint the selection into the text area and puts it in the PaperPress)
      */
     public void annuler() {
-        super.zoneDeTravail.effacer();
+        super.zoneDeTravail.suppr();
     }
 
 }

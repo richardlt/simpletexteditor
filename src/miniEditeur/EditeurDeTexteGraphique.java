@@ -111,7 +111,24 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
         grid.add(buttonUndo);
         grid.add(buttonRedo);
 
-        final JTextArea zdt = new JTextArea();
+        
+        class MyJTextArea extends JTextArea {
+        	
+        	EditeurDeTexte e;
+        	
+        	public MyJTextArea(EditeurDeTexte e){
+        		super();
+        		this.e=e;
+        	}
+        	
+        	public void actualiserContenu(){
+        		this.setText(e.getZoneDeTravail().getBuffer().toString());
+        	}
+        }
+        
+        final MyJTextArea zdt = new MyJTextArea(this);
+        
+        
         zdt.setBackground(Color.WHITE);
 
         /**
@@ -131,8 +148,11 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyCode() != KeyEvent.VK_DELETE) {
-                    Ecrire ecrire = new Ecrire(edt);
+                	setTampon(""+e.getKeyChar());
+                	Ecrire ecrire = new Ecrire(edt);
                     ecrire.executer();
+                    zdt.setText("");
+                    zdt.actualiserContenu();
                 }
             }
 
@@ -170,8 +190,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     Selection selection = new Selection();
                     endIndex = zdt.getCaretPosition();
                     autoSwitchIndex(this.startIndex, this.endIndex);
-                    selection.setIndexDebut(startIndex);
-                    selection.setIndexFin(endIndex);
+                    selection.setSelection(startIndex, endIndex);
                     //System.out.println("indexDebut : "+this.startIndex+" / indexFin : "+this.endIndex);
                 }
             }

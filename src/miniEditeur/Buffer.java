@@ -31,32 +31,22 @@ public class Buffer{
 		return buffer;
 	}
 	
-	public void insertInto(Buffer newBuffer, int position){
-		buffer.addAll(position, newBuffer.getValue());
-	}
-	
-	public void remove(int position, int length){
-		for(int i=position;i<(position+length);i++){
-			buffer.remove(i);
+	public void insertAfterCursor(Buffer buf, int position){
+		int indexInsert=position;
+		for(int i=0;i<buf.size();i++){
+			if(indexInsert<this.size()){
+				this.add(indexInsert, buf.get(i).byteValue());
+				indexInsert++;
+			}else{
+				this.add(buf.get(i).byteValue());
+				indexInsert++;
+			}
 		}
 	}
 	
-	public void replaceInterval(Buffer buf, Selection s){
-		int indexInsert=s.getIndexDebut();
-		for(int i=0;i<buf.size();i++){
-			if(indexInsert<=s.getIndexFin()){
-				this.set(indexInsert, buf.get(i).byteValue());
-				indexInsert++;
-			}else{
-				if(indexInsert<this.size()){
-					this.add(indexInsert, buf.get(i).byteValue());
-					indexInsert++;
-				}else{
-					System.out.println(indexInsert+" - "+i+" - "+(char) buf.get(i).byteValue());
-					this.add(buf.get(i).byteValue());
-					indexInsert++;
-				}
-			}
+	public void remove(int position, int length){
+		for(int i=(position+length)-1;i>=position && i<buffer.size();i--){
+			buffer.remove(i);
 		}
 	}
 	
@@ -86,7 +76,7 @@ public class Buffer{
 
 	public Buffer getInterval(Selection s) {		
 		Buffer buf=new Buffer();
-		for(int i=s.getIndexDebut();i<=s.getIndexFin();i++){
+		for(int i=s.getPosition();i<s.getPosition()+s.getLongueur() && i<buffer.size();i++){
 			buf.set(i, buffer.get(i).byteValue());
 		}
 		return buf;

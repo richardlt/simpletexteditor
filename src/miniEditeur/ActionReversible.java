@@ -1,6 +1,6 @@
 package miniEditeur;
 
-public abstract class ActionReversible implements Action{
+public abstract class ActionReversible extends Action{
 	
 	private int attribute;
 	private Buffer buffer;	
@@ -13,13 +13,9 @@ public abstract class ActionReversible implements Action{
 		zoneDeTravail=e.getZoneDeTravail();
 	}
 
-	public void executer() {
-		// TODO : to implement	
-	}
+	public abstract void executer();
 	
-	public void annuler() {
-		// TODO : to implement	
-	}
+	public abstract void annuler();
 	
 }
 

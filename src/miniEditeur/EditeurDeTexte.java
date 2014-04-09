@@ -29,14 +29,30 @@ public abstract class EditeurDeTexte extends Thread{
 		tampon=text;
 	}
 	
-	public void setSelection(Integer start, Integer end){
+	public void setSelection(Integer position, Integer longueur){
 		Selection s=zoneDeTravail.getSelection();
-		s.setIndexDebut(start);
-		s.setIndexFin(end);
+		if(position+longueur>this.zoneDeTravail.getBuffer().size()){
+			if(position>this.zoneDeTravail.getBuffer().size()){
+				s.setSelection(this.zoneDeTravail.getBuffer().size(), 0);
+			}else{
+				s.setSelection(position, this.zoneDeTravail.getBuffer().size()-position);
+			}
+		}else{
+			s.setSelection(position, longueur);
+		}
 	}
 		
 	public String toString(){
 		return zoneDeTravail.toString();
 	}
+	
+	public void addAction(Action a){
+		this.actionList.add(a);
+	}
+
+	public ArrayList<Action> getAction() {
+		return this.actionList;
+	}
+	
 }
 

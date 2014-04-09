@@ -21,26 +21,27 @@ public class ZoneDeTravail {
 	}
 
 	public boolean couper() {
+		this.pressePapier.setValue(this.buffer.getInterval(this.selection));
+		this.suppr();
 		return false;
 	}
 
 	public boolean ecrire(String text) {
 		Buffer newT=new Buffer(text.getBytes());
-		this.buffer.replaceInterval(newT, this.selection);
-		this.selection.setIndexDebut(this.selection.getIndexDebut()+newT.size());
-		this.selection.toCursor();
+		if(!this.selection.isCursor()){
+			this.suppr();
+		}
+		this.buffer.insertAfterCursor(newT, this.selection.getPosition());
+		this.selection.setSelection(this.selection.getPosition()+newT.size(), 0);
 		return true;
 	}
 
 	public boolean coller(){
-		this.buffer.remove(this.selection.getIndexDebut(), this.selection.getIndexFin()-this.selection.getIndexDebut());
-		this.selection.toCursor();
-		this.buffer.insertInto(this.pressePapier.getBuffer(), this.selection.getIndexDebut());
+		if(!this.selection.isCursor()){
+			this.suppr();
+		}
+		this.buffer.insertAfterCursor(this.pressePapier.getBuffer(), this.selection.getPosition());
 		return true;
-	}
-
-	public void effacer() {
-            
 	}
 
 	// Class ZoneDeTravail's accessors
@@ -64,35 +65,36 @@ public class ZoneDeTravail {
 	public Buffer getBuffer() {
 		return this.buffer;
 	}
-
-	public void setBuffer(Buffer buffer) {
-		this.buffer = buffer;
-	}	
 	
 	public String toString(){
 		String temp="";
 		for(int i=0;i<=this.buffer.size();i++){
-			if(this.selection.getIndexDebut()<=i && i<=this.selection.getIndexFin()){
-				temp+="^";
+			if(this.selection.getPosition()<=i && i<=this.selection.getPosition()+this.selection.getLongueur()){
+				if(this.selection.isCursor()){
+					temp+="|";
+				}else if(i<this.selection.getPosition()+this.selection.getLongueur()){
+					temp+="^";
+				}
 			}else{
 				temp+=" ";
 			}
 		}
-		return "Presse papier : "+this.pressePapier.toString()+"\n"+this.buffer.toString()+"\n"+temp;
+		return "Presse papier : "+this.pressePapier.toString()+" Selection : "+this.selection.getPosition()+" - "+this.selection.getLongueur()+"\n"+this.buffer.toString()+"\n"+temp;
 		
 	}
 
 	public void retourArriere() {
-		// TODO Auto-generated method stub	
+		if(!this.selection.isCursor()){
+			this.suppr();
+		}else{
+			this.buffer.remove(this.selection.getPosition()-1, 1);
+			this.selection.setSelection(this.selection.getPosition()-1, 0);
+		}
 	}
-        
-        public void refaire(){
-            
-        }
-
-	public void suppr() {
-		// TODO Auto-generated method stub
-		
+	
+	public void suppr(){
+		this.buffer.remove(this.selection.getPosition(), this.selection.getLongueur());
+		this.selection.toCursor();
 	}	
 
 }

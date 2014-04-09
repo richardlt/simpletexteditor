@@ -1,6 +1,6 @@
 package miniEditeur;
 
-public class Undo extends ActionNonReversible {
+public class Undo extends ActionReversion {
 
     /**
      * Constructor of the Undo class
@@ -15,7 +15,24 @@ public class Undo extends ActionNonReversible {
      * Method that send an order to undo the previous reversible action
      */
     public void executer() {
-        super.editeurDeTexte.getZoneDeTravail().retourArriere();
+    	if(this.action==null){
+    		int index=super.editeurDeTexte.getAction().size()-1;
+    		do{
+        		if(index<0){this.action=null;break;}
+    			this.action=super.editeurDeTexte.getAction().get(index);
+    			index--;
+    		}while(!(this.action.getClass()!=this.getClass() && this.action.getState()==true));
+    	}
+    	if(this.action!=null){
+    		this.action.annuler();
+        	this.state=true;
+    	}
     }
+
+	@Override
+	public void annuler(){
+		this.action.executer();
+		this.state=false;
+	}
 
 }

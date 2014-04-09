@@ -10,27 +10,27 @@ public class RetourArriere extends ActionReversible{
 	}
 	public void executer() {
 		s=super.zoneDeTravail.getSelection();
-		if((s.getIndexDebut()-s.getIndexFin())>0){
+		if(!s.isCursor()){
 			tampon=super.zoneDeTravail.getBuffer().getInterval(s);
-			super.zoneDeTravail.effacer();
+			super.zoneDeTravail.suppr();
 		}
 		else{
-			if(s.getIndexDebut()>0){
-				s.setIndexDebut(s.getIndexDebut()-1);
+			if(s.getPosition()>0){
+				s.setSelection(s.getPosition()-1, s.getLongueur());
 				tampon=super.zoneDeTravail.getBuffer().getInterval(s);
-				s.setIndexDebut(s.getIndexDebut()+1);
+				s.setSelection(s.getPosition()+1, s.getLongueur());
 				super.zoneDeTravail.retourArriere();
 			}
 		}
 	}
 	
 	public void annuler() {
-		if((s.getIndexDebut()-s.getIndexFin())>0){
+		if(!s.isCursor()){
 			super.zoneDeTravail.setSelection(s);
 			super.zoneDeTravail.ecrire(tampon.toString());
 		}else{
-			if(s.getIndexDebut()>0){
-				s.setIndexDebut(s.getIndexDebut()-1);
+			if(s.getPosition()>0){
+				s.setSelection(s.getPosition()-1, s.getLongueur());
 				super.zoneDeTravail.setSelection(s);
 				super.zoneDeTravail.ecrire(tampon.toString());
 			}

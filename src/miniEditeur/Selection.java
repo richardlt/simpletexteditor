@@ -2,39 +2,40 @@ package miniEditeur;
 
 public class Selection{
 	
-	private int indexDebut;
-	private int indexFin;
+	private int position;
+	private int longueur;
 	
 	/**
 	 * Constructor of Selection initialize startIndex and endIndex to 0
 	 */
 	public Selection(){
 		super();
-		this.indexDebut=0;
-		this.indexFin=0;
+		this.position=0;
+		this.longueur=0;
 		//selecton qui a le meme index debut et fin est un curseur
 	}
 	
 	// Class Selection's accessors 
 	
-	public void setIndexDebut(int i){
-		this.indexDebut = i;
+	public void setSelection(int position, int longueur){
+		this.position = position;
+		this.longueur = longueur;
 	}
 	
-	public void setIndexFin(int i){
-		this.indexFin = i;
+	public int getPosition(){
+		return this.position;
 	}
 	
-	public int getIndexDebut(){
-		return this.indexDebut;
-	}
-	
-	public int getIndexFin(){
-		return this.indexFin;
+	public int getLongueur(){
+		return this.longueur;
 	}
 
-	public void toCursor() {
-		this.indexFin=this.indexDebut;		
+	public void toCursor(){
+		this.longueur=0;	
+	}
+
+	public boolean isCursor() {
+		return this.longueur==0;
 	}
 
 }

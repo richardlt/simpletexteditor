@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package miniEditeur;
 
 import java.util.Scanner;
@@ -30,42 +29,40 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 			
 			
 			if(str.equals("e")){
-				Action a=new Ecrire(this);
+				Action a=new Ecrire(this);super.addAction(a);
 				System.out.println("Ecrivez votre texte");
 				String text = sc.nextLine();
 				setTampon(text);
 				a.executer();
 			}else if(str.equals("ret")){	
-				Action a=new RetourArriere(this);
+				Action a=new RetourArriere(this);super.addAction(a);
 				a.executer();
 			}else if(str.equals("suppr")){	
-				Action a=new Suppr(this);
+				Action a=new Suppr(this);super.addAction(a);
 				a.executer();
 			}else if(str.equals("s")){	
-				System.out.println("Ecrivez l'index de début de la sélection");
+				System.out.println("Ecrivez la position de la sélection");
 				Integer start = sc.nextInt();
-				System.out.println("Ecrivez l'index de fin de la sélection");
+				System.out.println("Ecrivez la longueur de la sélection");
 				Integer end = sc.nextInt();
 				setSelection(start, end);
 			}else if(str.equals("cp")){
-				Action a=new Copier(this);
+				Action a=new Copier(this);super.addAction(a);
 				a.executer();
 			}else if(str.equals("p")){
-				Action a=new Coller(this);
+				Action a=new Coller(this);super.addAction(a);
 				a.executer();
 			}else if(str.equals("cu")){
-				Action a=new Couper(this);
+				Action a=new Couper(this);super.addAction(a);
 				a.executer();
 			}else if(str.equals("u")){
-				Action a=new Undo(this);
+				Action a=new Undo(this);super.addAction(a);
 				a.executer();
 			}else if(str.equals("r")){
-				Action a=new Redo(this);
+				Action a=new Redo(this);super.addAction(a);
 				a.executer();
 			}
 		}
 	}
-
-=======
-package miniEditeur;
+}
 
