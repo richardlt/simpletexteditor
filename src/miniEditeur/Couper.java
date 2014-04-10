@@ -2,7 +2,8 @@ package miniEditeur;
 
 public class Couper extends ActionReversible {
 
-    PressePapier p;
+    Buffer old;
+    Selection s;
 
     /**
      * Constructor of the Couper class
@@ -11,6 +12,8 @@ public class Couper extends ActionReversible {
      */
     public Couper(EditeurDeTexte e) {
         super(e);
+		s=null;
+		old=null;
     }
 
     /**
@@ -18,16 +21,29 @@ public class Couper extends ActionReversible {
      * paper press to the ZoneDeTravail
      */
     public void executer() {
-        p = new PressePapier(zoneDeTravail.getPressePapier());
-        super.zoneDeTravail.couper();
+    	if(s==null){
+			s=new Selection(super.zoneDeTravail.getSelection());
+			old=super.zoneDeTravail.getBuffer().getInterval(s);
+			s.setSelection(s.getPosition(), 0);
+		}else{
+			super.zoneDeTravail.setSelection(s);
+		}
+		super.zoneDeTravail.couper();
+        this.state=1;
     }
 
     /**
      * Procedure to cancel effects of the cut action (reprint the selection into
      * the text area to its right place)
      */
-    public void annuler() {
-        super.zoneDeTravail.ecrire(p.toString());
+    public void annuler(){
+    	super.zoneDeTravail.setSelection(s);
+		super.zoneDeTravail.ecrire(old.toString());
+		this.state=0;
+    }
+    
+    public String toString(){
+		return "Couper";
     }
 
 }

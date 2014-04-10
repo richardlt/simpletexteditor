@@ -17,10 +17,17 @@ public class Selection{
 	
 	// Class Selection's accessors 
 	
+	public Selection(Selection selection) {
+		this.longueur=selection.longueur;
+		this.position=selection.position;
+	}
+
 	public void setSelection(int position, int longueur){
 		this.position = position;
 		this.longueur = longueur;
 	}
+	
+	
 	
 	public int getPosition(){
 		return this.position;
@@ -36,6 +43,10 @@ public class Selection{
 
 	public boolean isCursor() {
 		return this.longueur==0;
+	}
+	
+	public String toString(){
+		return "Selection : "+this.getPosition()+" - "+this.getLongueur();
 	}
 
 }

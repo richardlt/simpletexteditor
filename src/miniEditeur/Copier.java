@@ -19,13 +19,16 @@ public class Copier extends ActionReversible {
     public void executer() {
         p = new PressePapier(zoneDeTravail.getPressePapier());
         super.zoneDeTravail.copier();
+        this.state=-1;
     }
 
     /**
      * Procedure to cancel effects of the copy action (reset the Paper Press' content to its previous version)
      */
-    public void annuler() {
-        super.zoneDeTravail.setPressePapier(p);
+    public void annuler(){}
+    
+    public String toString(){
+		return "Copier";
     }
 
 }

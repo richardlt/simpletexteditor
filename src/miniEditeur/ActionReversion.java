@@ -13,5 +13,8 @@ public abstract class ActionReversion extends Action{
 
 	public abstract void executer();
 	
+	public abstract void annuler();
+
+	public abstract String toString(); 
 }
 

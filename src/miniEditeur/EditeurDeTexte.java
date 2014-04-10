@@ -1,9 +1,10 @@
 package miniEditeur;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public abstract class EditeurDeTexte extends Thread{
 	
-	private ArrayList<Action> actionList;
+	protected ArrayList<Action> actionList;
 	private ZoneDeTravail zoneDeTravail;	
 	private String tampon;
 
@@ -43,7 +44,12 @@ public abstract class EditeurDeTexte extends Thread{
 	}
 		
 	public String toString(){
-		return zoneDeTravail.toString();
+		String temp="Action : ";
+		Iterator<Action> it=this.actionList.iterator();
+		while(it.hasNext()){
+			temp+=it.next().toString()+" - ";
+		}
+		return temp+"\n"+zoneDeTravail.toString();
 	}
 	
 	public void addAction(Action a){

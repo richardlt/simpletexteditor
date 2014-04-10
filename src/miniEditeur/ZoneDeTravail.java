@@ -41,6 +41,7 @@ public class ZoneDeTravail {
 			this.suppr();
 		}
 		this.buffer.insertAfterCursor(this.pressePapier.getBuffer(), this.selection.getPosition());
+		this.selection.setSelection(this.selection.getPosition()+this.pressePapier.getBuffer().size(), 0);
 		return true;
 	}
 
@@ -59,7 +60,7 @@ public class ZoneDeTravail {
 	}
 
 	public void setSelection(Selection selection) {
-		this.selection = selection;
+		this.selection = new Selection(selection);
 	}
 
 	public Buffer getBuffer() {
@@ -79,7 +80,7 @@ public class ZoneDeTravail {
 				temp+=" ";
 			}
 		}
-		return "Presse papier : "+this.pressePapier.toString()+" Selection : "+this.selection.getPosition()+" - "+this.selection.getLongueur()+"\n"+this.buffer.toString()+"\n"+temp;
+		return "Presse papier : "+this.pressePapier.toString()+" "+this.selection.toString()+"\n"+this.buffer.toString()+"\n"+temp;
 		
 	}
 
@@ -95,6 +96,16 @@ public class ZoneDeTravail {
 	public void suppr(){
 		this.buffer.remove(this.selection.getPosition(), this.selection.getLongueur());
 		this.selection.toCursor();
+	}
+
+	public void raccourcir(Integer tailleZone) {
+		if(this.buffer.size()>tailleZone){
+			this.buffer.remove(this.buffer.size()-2, tailleZone-this.buffer.size());			
+		}
+	}
+
+	public void setSelection(int position, int size) {
+		this.selection.setSelection(position, size);
 	}	
 
 }
