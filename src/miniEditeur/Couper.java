@@ -21,10 +21,9 @@ public class Couper extends ActionReversible {
      * paper press to the ZoneDeTravail
      */
     public void executer() {
-    	if(s==null){
+    	if(this.s==null){
 			s=new Selection(super.zoneDeTravail.getSelection());
 			old=super.zoneDeTravail.getBuffer().getInterval(s);
-			s.setSelection(s.getPosition(), 0);
 		}else{
 			super.zoneDeTravail.setSelection(s);
 		}
@@ -37,6 +36,7 @@ public class Couper extends ActionReversible {
      * the text area to its right place)
      */
     public void annuler(){
+    	Selection s=new Selection(this.s);s.toCursor();
     	super.zoneDeTravail.setSelection(s);
 		super.zoneDeTravail.ecrire(old.toString());
 		this.state=0;
