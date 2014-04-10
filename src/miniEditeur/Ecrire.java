@@ -18,6 +18,8 @@ public class Ecrire extends ActionReversible{
 			tampon=super.editeurDeTexte.getTampon();
 			s=new Selection();s.setSelection(super.zoneDeTravail.getSelection().getPosition(), tampon.length());
 			old=super.zoneDeTravail.getBuffer().getInterval(s);
+		}else{
+			super.zoneDeTravail.setSelection(s.getPosition(), 0);
 		}
 		super.zoneDeTravail.ecrire(tampon);
 		this.state=1;

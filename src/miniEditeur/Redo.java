@@ -22,8 +22,7 @@ public class Redo extends ActionReversion {
 	    		System.out.println(index);
 	    		if(index<0){this.action=null;break;}
 	    		this.action=super.editeurDeTexte.getAction().get(index);
-			}while(!(this.action.getClass().getSimpleName().equals("Undo") 
-					&& this.action.getState()==1));
+			}while(!(this.action.getClass().getSimpleName().equals("Undo") && this.action.getState()==1));
     	}
     	if(this.action!=null){
     		this.action.annuler();
