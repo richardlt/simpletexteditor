@@ -83,14 +83,14 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (startIndex != 0 && endIndex != 0) {
+                if (!zdt.getSelectedText().equals("")) {
                     byte[] tmp = zdt.getSelectedText().getBytes();
                     edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
                     edt.setSelection(startIndex, endIndex);                    
                     Copier copier = new Copier(edt);
                     copier.executer();
                     edt.addAction(copier);
-                    System.out.println("Contenu du Presse Papier : "+edt.getZoneDeTravail().getPressePapier().toString());
+                    System.out.println("Contenu de la text area : "+edt.getZoneDeTravail().print());
                 }
             }
         });
@@ -99,7 +99,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {                
-                if (startIndex != 0 && endIndex != 0) {
+                if (zdt.getSelectedText() != null) {
+                    System.out.println(startIndex+" / "+endIndex);
                     byte[] tmp = zdt.getSelectedText().getBytes();
                     edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
                     edt.setSelection(startIndex, endIndex);                    
@@ -107,7 +108,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     couper.executer();
                     edt.addAction(couper);
                     zdt.actualiserContenu();
-                    System.out.println("Contenu du Presse Papier : "+edt.getZoneDeTravail().getPressePapier().toString());
+                    System.out.println("Contenu de la text area : "+edt.getZoneDeTravail().print());
                 }
                 
             }
@@ -117,12 +118,13 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-               if (edt.getZoneDeTravail().getSelection() != null) {
+               if (edt.getZoneDeTravail().getPressePapier() != null) {
                     Coller coller = new Coller(edt);
                     coller.executer();
                     zdt.replaceSelection(zdt.getSelectedText());
                     edt.addAction(coller);
                     zdt.actualiserContenu();
+                    System.out.println("Contenu de la text area : "+edt.getZoneDeTravail().print());
                 }
             }
         });
@@ -176,8 +178,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     edt.setTampon("" + e.getKeyChar());
                     Ecrire ecrire = new Ecrire(edt);
                     ecrire.executer();
-                    zdt.actualiserContenu();
                     edt.addAction(ecrire);
+                    zdt.actualiserContenu();
                 }
             }
         }
@@ -189,6 +191,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void mouseClicked(MouseEvent arg0) {
+                startIndex  = zdt.getCaretPosition();
+                endIndex    = zdt.getCaretPosition();
             }
 
             @Override
@@ -211,7 +215,6 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     endIndex = zdt.getCaretPosition();
                     autoSwitchIndex();
                     edt.setSelection(startIndex, endIndex);
-                    //System.out.println("indexDebut : "+startIndex+" / indexFin : "+endIndex);
                 }
             }
 
