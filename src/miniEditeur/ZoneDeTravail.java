@@ -8,11 +8,13 @@ public class ZoneDeTravail {
 	private PressePapier pressePapier;
 	private Selection selection;
 	private Buffer buffer;
+        private EditeurDeTexte edt;
 
 	public ZoneDeTravail(EditeurDeTexte e) {
 		this.buffer 		= new Buffer();
 		this.pressePapier 	= new PressePapier();
 		this.selection 		= new Selection();
+                this.edt                = e;
 	}
 
 	public boolean copier() {
@@ -83,6 +85,11 @@ public class ZoneDeTravail {
 		return "Presse papier : "+this.pressePapier.toString()+" "+this.selection.toString()+"\n"+this.buffer.toString()+"\n"+temp;
 		
 	}
+        
+	public String print(){
+            return this.buffer.toString();		
+	}
+        
 
 	public void retourArriere() {
 		if(!this.selection.isCursor()){
