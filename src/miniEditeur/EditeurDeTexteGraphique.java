@@ -17,11 +17,14 @@ import javax.swing.JTextArea;
 
 public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
+    protected static int startIndex, endIndex;
     /**
      * Constructor of the EditeurDeTexteGraphique's class
      */
     public EditeurDeTexteGraphique() {
         super();
+        this.startIndex = 0;
+        this.endIndex   = 0;
     }
 
     /**
@@ -58,23 +61,55 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
         // Give access to the editor object in the listeners
         final EditeurDeTexte edt = this;
+        
+        class MyJTextArea extends JTextArea {
+
+            EditeurDeTexte e;
+
+            public MyJTextArea(EditeurDeTexte e) {
+                super();
+                this.e = e;
+            }
+
+            public void actualiserContenu() {
+                this.setText(e.getZoneDeTravail().print());
+            }
+        }
+
+        final MyJTextArea zdt = new MyJTextArea(this);
 
         // Add of action listener on every button created up there
         buttonCopy.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Copier copier = new Copier(edt);
-                copier.executer();
+                if (startIndex != 0 && endIndex != 0) {
+                    byte[] tmp = zdt.getSelectedText().getBytes();
+                    edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
+                    edt.setSelection(startIndex, endIndex);                    
+                    Copier copier = new Copier(edt);
+                    copier.executer();
+                    edt.addAction(copier);
+                    System.out.println("Contenu du Presse Papier : "+edt.getZoneDeTravail().getPressePapier().toString());
+                }
             }
         });
 
         buttonCut.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
-                Couper couper = new Couper(edt);
-                couper.executer();
+            public void actionPerformed(ActionEvent e) {                
+                if (startIndex != 0 && endIndex != 0) {
+                    byte[] tmp = zdt.getSelectedText().getBytes();
+                    edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
+                    edt.setSelection(startIndex, endIndex);                    
+                    Couper couper = new Couper(edt);
+                    couper.executer();
+                    edt.addAction(couper);
+                    zdt.actualiserContenu();
+                    System.out.println("Contenu du Presse Papier : "+edt.getZoneDeTravail().getPressePapier().toString());
+                }
+                
             }
         });
 
@@ -82,8 +117,13 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Coller coller = new Coller(edt);
-                coller.executer();
+               if (edt.getZoneDeTravail().getSelection() != null) {
+                    Coller coller = new Coller(edt);
+                    coller.executer();
+                    zdt.replaceSelection(zdt.getSelectedText());
+                    edt.addAction(coller);
+                    zdt.actualiserContenu();
+                }
             }
         });
 
@@ -93,6 +133,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             public void actionPerformed(ActionEvent e) {
                 Undo undo = new Undo(edt);
                 undo.executer();
+                edt.addAction(undo);
+                zdt.actualiserContenu();
             }
         });
 
@@ -102,6 +144,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             public void actionPerformed(ActionEvent e) {
                 Redo redo = new Redo(edt);
                 redo.executer();
+                edt.addAction(redo);
+                zdt.actualiserContenu();
             }
         });
 
@@ -111,29 +155,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
         grid.add(buttonUndo);
         grid.add(buttonRedo);
 
-        
-        class MyJTextArea extends JTextArea {
-        	
-        	EditeurDeTexte e;
-        	
-        	public MyJTextArea(EditeurDeTexte e){
-        		super();
-        		this.e=e;
-        	}
-        	
-        	public void actualiserContenu(){
-        		this.setText(e.getZoneDeTravail().getBuffer().toString());
-        	}
-        }
-        
-        final MyJTextArea zdt = new MyJTextArea(this);
-        
-        
         zdt.setBackground(Color.WHITE);
 
         /**
-         * Constructor of the internal class MyKeyListener to handle writing
-         * events
+         * Constructor of the internal class MyKeyListener to handle writing events
          */
         class MyKeyListener implements KeyListener {
 
@@ -148,23 +173,19 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyCode() != KeyEvent.VK_DELETE) {
-                	setTampon(""+e.getKeyChar());
-                	Ecrire ecrire = new Ecrire(edt);
+                    edt.setTampon("" + e.getKeyChar());
+                    Ecrire ecrire = new Ecrire(edt);
                     ecrire.executer();
-                    zdt.setText("");
                     zdt.actualiserContenu();
+                    edt.addAction(ecrire);
                 }
             }
-
         }
 
         /**
-         * Constructor of the internal class MyMouseListener to handle selection
-         * events
+         * Constructor of the internal class MyMouseListener to handle selection events
          */
         class MyMouseListener implements MouseListener {
-
-            private int startIndex, endIndex;
 
             @Override
             public void mouseClicked(MouseEvent arg0) {
@@ -187,19 +208,18 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (zdt.getSelectedText() != null) {
-                    Selection selection = new Selection();
                     endIndex = zdt.getCaretPosition();
-                    autoSwitchIndex(this.startIndex, this.endIndex);
-                    selection.setSelection(startIndex, endIndex);
-                    //System.out.println("indexDebut : "+this.startIndex+" / indexFin : "+this.endIndex);
+                    autoSwitchIndex();
+                    edt.setSelection(startIndex, endIndex);
+                    //System.out.println("indexDebut : "+startIndex+" / indexFin : "+endIndex);
                 }
             }
 
-            public void autoSwitchIndex(int startIndex, int endIndex) {
-                if (startIndex > endIndex) {
-                    int tmp = this.startIndex;
-                    this.startIndex = this.endIndex;
-                    this.endIndex = tmp;
+            public void autoSwitchIndex() {
+                if (EditeurDeTexteGraphique.startIndex > EditeurDeTexteGraphique.endIndex) {
+                    int tmp = EditeurDeTexteGraphique.startIndex;
+                    EditeurDeTexteGraphique.startIndex = EditeurDeTexteGraphique.endIndex;
+                    EditeurDeTexteGraphique.endIndex = tmp;
                 }
             }
 
