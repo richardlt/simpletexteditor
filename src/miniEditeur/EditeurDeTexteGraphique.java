@@ -187,10 +187,12 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             public void actionPerformed(ActionEvent e) {
                 edt.setTampon(tmpTextarea.getText());
                 edt.setSelection(startIndex, endIndex);
+                zdt.insert(tmpTextarea.getText(), startIndex);
                 Ecrire ecrire = new Ecrire(edt);
                 ecrire.executer();
                 edt.addAction(ecrire);
                 zdt.actualiserContenu();
+                tmpTextarea.setText("");
             }
         });        
         
@@ -250,10 +252,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             }
 
             public void autoSwitchIndex() {
-                if (EditeurDeTexteGraphique.startIndex > EditeurDeTexteGraphique.endIndex) {
-                    int tmp = EditeurDeTexteGraphique.startIndex;
-                    EditeurDeTexteGraphique.startIndex = EditeurDeTexteGraphique.endIndex;
-                    EditeurDeTexteGraphique.endIndex = tmp;
+                if (startIndex > endIndex) {
+                    int tmp = startIndex;
+                    startIndex = endIndex;
+                    endIndex = tmp;
                 }
             }
         }
