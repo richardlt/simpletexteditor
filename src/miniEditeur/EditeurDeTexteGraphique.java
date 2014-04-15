@@ -57,12 +57,15 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
         JButton buttonRedo = new JButton("Refaire");
         buttonRedo.setSize(30, 20);
         buttonRedo.setBackground(Color.ORANGE);
+        JButton buttonSuppr = new JButton("Supprimer");
+        buttonSuppr.setSize(30, 20);
+        buttonSuppr.setBackground(Color.GRAY);
 
         JPanel grid = new JPanel();
-        grid.setLayout(new GridLayout(1, 5));
+        grid.setLayout(new GridLayout(1, 6));
         JPanel gridbottom = new JPanel();
-        final JTextPane tmpTextarea   = new JTextPane();        
-        JButton buttonEcrire    = new JButton("Insérer");
+        final JTextPane tmpTextarea = new JTextPane();        
+        JButton buttonEcrire        = new JButton("Écrire");
         buttonEcrire.setBackground(Color.GREEN);
         gridbottom.add(tmpTextarea);
         gridbottom.add(buttonEcrire);
@@ -83,6 +86,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             public void actualiserContenu() {
                 this.setText(e.getZoneDeTravail().print());
+                System.out.println(e.getZoneDeTravail().print());
             }
         }
 
@@ -96,11 +100,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                 if (!zdt.getSelectedText().equals("")) {
                     byte[] tmp = zdt.getSelectedText().getBytes();
                     edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
-                    edt.setSelection(startIndex, endIndex);                    
+                    edt.setSelection(startIndex, endIndex);
                     Copier copier = new Copier(edt);
                     copier.executer();
                     edt.addAction(copier);
-                    System.out.println("Contenu de la text area : "+edt.getZoneDeTravail().print());
                 }
             }
         });
@@ -110,7 +113,6 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             @Override
             public void actionPerformed(ActionEvent e) {                
                 if (zdt.getSelectedText() != null) {
-                    System.out.println(startIndex+" / "+endIndex);
                     byte[] tmp = zdt.getSelectedText().getBytes();
                     edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
                     edt.setSelection(startIndex, endIndex);                    
@@ -118,7 +120,6 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     couper.executer();
                     edt.addAction(couper);
                     zdt.actualiserContenu();
-                    System.out.println("Contenu de la text area : "+edt.getZoneDeTravail().print());
                 }
                 
             }
@@ -134,8 +135,18 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     zdt.replaceSelection(zdt.getSelectedText());
                     edt.addAction(coller);
                     zdt.actualiserContenu();
-                    System.out.println("Contenu de la text area : "+edt.getZoneDeTravail().print());
                 }
+            }
+        });
+
+        buttonSuppr.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Suppr suppr = new Suppr(edt);
+                suppr.executer();
+                edt.addAction(suppr);
+                zdt.actualiserContenu();
             }
         });
 
@@ -149,7 +160,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                 zdt.actualiserContenu();
             }
         });
-
+        
         buttonRedo.addActionListener(new ActionListener() {
 
             @Override
@@ -164,6 +175,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
         grid.add(buttonCopy);
         grid.add(buttonCut);
         grid.add(buttonPaste);
+        grid.add(buttonSuppr);
         grid.add(buttonUndo);
         grid.add(buttonRedo);
 
@@ -174,6 +186,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             @Override
             public void actionPerformed(ActionEvent e) {
                 edt.setTampon(tmpTextarea.getText());
+                edt.setSelection(startIndex, endIndex);
                 Ecrire ecrire = new Ecrire(edt);
                 ecrire.executer();
                 edt.addAction(ecrire);
@@ -196,14 +209,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void keyTyped(KeyEvent e) {
-                if (e.getKeyCode() != KeyEvent.VK_DELETE) {
-                    char tmp = e.getKeyChar();
-                    edt.setTampon("" + tmp);
-                    Ecrire ecrire = new Ecrire(edt);
-                    ecrire.executer();
-                    edt.addAction(ecrire);
-                    zdt.actualiserContenu();
-                }
+                zdt.setText("");
             }
         }
 
@@ -213,9 +219,11 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
         class MyMouseListener implements MouseListener {
 
             @Override
+            // Get cursor position (insert action)
             public void mouseClicked(MouseEvent arg0) {
                 startIndex  = zdt.getCaretPosition();
-                endIndex    = zdt.getCaretPosition();
+                endIndex    = startIndex;
+                edt.setSelection(startIndex, endIndex); 
             }
 
             @Override
@@ -248,7 +256,6 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                     EditeurDeTexteGraphique.endIndex = tmp;
                 }
             }
-
         }
 
         MyMouseListener mml = new MyMouseListener();
