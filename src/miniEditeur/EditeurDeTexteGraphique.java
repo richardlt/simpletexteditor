@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.border.Border;
 
 public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
@@ -58,6 +60,14 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
         JPanel grid = new JPanel();
         grid.setLayout(new GridLayout(1, 5));
+        JPanel gridbottom = new JPanel();
+        final JTextPane tmpTextarea   = new JTextPane();        
+        JButton buttonEcrire    = new JButton("Insérer");
+        buttonEcrire.setBackground(Color.GREEN);
+        gridbottom.add(tmpTextarea);
+        gridbottom.add(buttonEcrire);
+        gridbottom.setLayout(new GridLayout(1, 2));
+        
 
         // Give access to the editor object in the listeners
         final EditeurDeTexte edt = this;
@@ -159,6 +169,18 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
         zdt.setBackground(Color.WHITE);
 
+        buttonEcrire.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                edt.setTampon(tmpTextarea.getText());
+                Ecrire ecrire = new Ecrire(edt);
+                ecrire.executer();
+                edt.addAction(ecrire);
+                zdt.actualiserContenu();
+            }
+        });        
+        
         /**
          * Constructor of the internal class MyKeyListener to handle writing events
          */
@@ -175,7 +197,8 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyCode() != KeyEvent.VK_DELETE) {
-                    edt.setTampon("" + e.getKeyChar());
+                    char tmp = e.getKeyChar();
+                    edt.setTampon("" + tmp);
                     Ecrire ecrire = new Ecrire(edt);
                     ecrire.executer();
                     edt.addAction(ecrire);
@@ -236,6 +259,7 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
         fenetre.add(grid, BorderLayout.NORTH);
         fenetre.add(zdt, BorderLayout.CENTER);
+        fenetre.add(gridbottom, BorderLayout.SOUTH);
         fenetre.setVisible(true);
         fenetre.pack();
         fenetre.repaint();
