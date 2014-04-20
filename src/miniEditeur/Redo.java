@@ -19,7 +19,6 @@ public class Redo extends ActionReversion {
     		int index=super.editeurDeTexte.getAction().size()-1;
 	    	do{
 	    		index--;
-	    		System.out.println(index);
 	    		if(index<0){this.action=null;break;}
 	    		this.action=super.editeurDeTexte.getAction().get(index);
 			}while(!(this.action.getClass().getSimpleName().equals("Undo") && this.action.getState()==1));
@@ -30,7 +29,6 @@ public class Redo extends ActionReversion {
     	}
     }
 
-	@Override
 	public void annuler() {
 		this.action.executer();
 		this.state=0;
@@ -40,5 +38,16 @@ public class Redo extends ActionReversion {
     	if(this.action!=null){return "Redo("+this.action.toString()+")";}
 		else{return "Redo";}
     }
+    
+    private void setAction(Action a){
+    	super.action=a;
+    }
+        
+	public Action clone() {
+		Redo a = new Redo(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setAction(super.action.clone());
+		return a;
+	}
 
 }

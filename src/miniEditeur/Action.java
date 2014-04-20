@@ -17,6 +17,8 @@ public abstract class Action {
 	public abstract void annuler();
 	
 	public abstract String toString(); 
+	
+	public abstract Action clone();
 		
 }
 

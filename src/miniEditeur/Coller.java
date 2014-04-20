@@ -48,5 +48,26 @@ public class Coller extends ActionReversible {
     public String toString(){
 		return "Coller";
     }
+    
+    private void setPressePapier(PressePapier pp){
+    	this.p=pp;
+    }
+    
+    private void setBuffer(Buffer buffer){
+    	this.old=buffer;
+    } 
+    
+    private void setSelection(Selection selection){
+    	this.s=selection;
+    } 
+    
+	public Action clone() {
+		Coller a = new Coller(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setPressePapier(new PressePapier(this.p));
+		a.setSelection(new Selection(this.s));
+		a.setBuffer(new Buffer(this.old));
+		return a;
+	}
 
 }

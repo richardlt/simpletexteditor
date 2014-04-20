@@ -2,8 +2,8 @@ package miniEditeur;
 
 public class Suppr extends ActionReversible{
 	
-	Selection s;
-	Buffer tampon;
+	private Selection s;
+	private Buffer tampon;
 	
 	public Suppr(EditeurDeTexte e){
 		super(e);
@@ -29,5 +29,21 @@ public class Suppr extends ActionReversible{
     public String toString(){
 		return "Suppr";
     }
+    
+    private void setSelection(Selection selection){
+    	this.s=selection;
+    }
+    
+    private void setBuffer(Buffer buffer){
+    	this.tampon=buffer;
+    } 
+    
+	public Action clone() {
+		Suppr a = new Suppr(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setSelection(new Selection(this.s));
+		a.setBuffer(new Buffer(this.tampon));	
+		return a;
+	}
 	
 }

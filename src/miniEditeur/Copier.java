@@ -30,5 +30,16 @@ public class Copier extends ActionReversible {
     public String toString(){
 		return "Copier";
     }
+    
+    private void setPressePapier(PressePapier pp){
+    	this.p=pp;
+    }
+    
+	public Action clone() {
+		Copier a = new Copier(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setPressePapier(new PressePapier(this.p));
+		return a;
+	}
 
 }

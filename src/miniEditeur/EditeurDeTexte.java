@@ -5,6 +5,8 @@ import java.util.Iterator;
 public abstract class EditeurDeTexte extends Thread{
 	
 	protected ArrayList<Action> actionList;
+	protected ArrayList<Action> record;
+	private Boolean flagRecord;
 	private ZoneDeTravail zoneDeTravail;	
 	private String tampon;
 
@@ -12,6 +14,8 @@ public abstract class EditeurDeTexte extends Thread{
 		super();
 		actionList=new ArrayList<Action>();
 		zoneDeTravail=new ZoneDeTravail(this);
+		record=new ArrayList<Action>();
+		flagRecord=false;
 	}
 	
 	public abstract void run();
@@ -54,10 +58,30 @@ public abstract class EditeurDeTexte extends Thread{
 	
 	public void addAction(Action a){
 		this.actionList.add(a);
+		if(flagRecord && !a.getClass().getSimpleName().equals("Undo") && !a.getClass().getSimpleName().equals("Redo")){
+			this.record.add(a);
+		}
 	}
 
 	public ArrayList<Action> getAction() {
 		return this.actionList;
+	}
+
+	public void startRecord() {
+		this.record=new ArrayList<Action>();	
+		this.flagRecord=true;
+	}
+
+	public void stopRecord() {
+		this.flagRecord=false;		
+	}
+
+	public void replay() {
+		for(Action a : record){
+			Action copy=a.clone();
+			this.addAction(copy);
+			copy.executer();
+		}
 	}
 	
 }

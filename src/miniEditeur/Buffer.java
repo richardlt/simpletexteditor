@@ -7,12 +7,10 @@ public class Buffer{
 	private ArrayList<Byte> buffer;
 	
 	public Buffer(){
-		super();
 		buffer=new ArrayList<Byte>();
 	}
 	
 	public Buffer(byte[] bytes) {
-		super();
 		buffer=new ArrayList<Byte>();
 		for(int i=0;i<bytes.length;i++){
 			buffer.add(bytes[i]);
@@ -20,10 +18,9 @@ public class Buffer{
 	}
 
 	public Buffer(Buffer buf) {
-		super();
 		buffer=new ArrayList<Byte>();
 		for(int i=0;i<buf.size();i++){
-			buffer.add(buf.get(i));
+			buffer.add(new Byte(buf.get(i)));
 		}
 	}
 

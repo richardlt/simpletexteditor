@@ -2,8 +2,6 @@ package miniEditeur;
 
 public abstract class ActionReversible extends Action{
 	
-	private int attribute;
-	private Buffer buffer;	
 	protected ZoneDeTravail zoneDeTravail;	
 	protected EditeurDeTexte editeurDeTexte;
 	
@@ -18,6 +16,8 @@ public abstract class ActionReversible extends Action{
 	public abstract void annuler();
 
 	public abstract String toString(); 
+	
+	public abstract Action clone();
 	
 }
 

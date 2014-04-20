@@ -19,14 +19,14 @@ import javax.swing.border.Border;
 
 public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
-    protected static int startIndex, endIndex;
+    //protected static int startIndex, endIndex;
     /**
      * Constructor of the EditeurDeTexteGraphique's class
      */
     public EditeurDeTexteGraphique() {
         super();
-        this.startIndex = 0;
-        this.endIndex   = 0;
+        //this.startIndex = 0;
+        //this.endIndex   = 0;
     }
 
     /**
@@ -84,9 +84,14 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
                 this.e = e;
             }
 
-            public void actualiserContenu() {
-                this.setText(e.getZoneDeTravail().print());
-                System.out.println(e.getZoneDeTravail().print());
+            public void actualiserContenu(){
+            	this.setText("");
+                this.setText(e.getZoneDeTravail().getBuffer().toString());                
+                System.out.println("actualiserContenu() - "+e.getZoneDeTravail().getBuffer().toString());
+            }
+            
+            public void actualiserSelection(){
+            	e.setSelection(this.getSelectionStart(), this.getSelectionEnd()-this.getSelectionStart());
             }
         }
 
@@ -97,14 +102,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!zdt.getSelectedText().equals("")) {
-                    byte[] tmp = zdt.getSelectedText().getBytes();
-                    edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
-                    edt.setSelection(startIndex, endIndex);
-                    Copier copier = new Copier(edt);
-                    copier.executer();
-                    edt.addAction(copier);
-                }
+                zdt.actualiserSelection();
+        		Copier copier = new Copier(edt);edt.addAction(copier);
+                copier.executer();
+                zdt.actualiserContenu();
             }
         });
 
@@ -112,16 +113,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {                
-                if (zdt.getSelectedText() != null) {
-                    byte[] tmp = zdt.getSelectedText().getBytes();
-                    edt.getZoneDeTravail().getPressePapier().setValue(new Buffer(tmp));
-                    edt.setSelection(startIndex, endIndex);                    
-                    Couper couper = new Couper(edt);
-                    couper.executer();
-                    edt.addAction(couper);
-                    zdt.actualiserContenu();
-                }
-                
+            	zdt.actualiserSelection();
+            	Couper couper = new Couper(edt);edt.addAction(couper);
+                couper.executer();                
+                zdt.actualiserContenu();                
             }
         });
 
@@ -129,13 +124,10 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-               if (edt.getZoneDeTravail().getPressePapier() != null) {
-                    Coller coller = new Coller(edt);
-                    coller.executer();
-                    zdt.replaceSelection(zdt.getSelectedText());
-                    edt.addAction(coller);
-                    zdt.actualiserContenu();
-                }
+            	zdt.actualiserSelection();
+            	Coller coller = new Coller(edt);edt.addAction(coller);
+            	coller.executer();
+                zdt.actualiserContenu();
             }
         });
 
@@ -143,9 +135,9 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Suppr suppr = new Suppr(edt);
+            	zdt.actualiserSelection();
+            	Suppr suppr = new Suppr(edt);edt.addAction(suppr);
                 suppr.executer();
-                edt.addAction(suppr);
                 zdt.actualiserContenu();
             }
         });
@@ -154,9 +146,9 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Undo undo = new Undo(edt);
-                undo.executer();
-                edt.addAction(undo);
+            	zdt.actualiserSelection();
+            	Undo undo = new Undo(edt);edt.addAction(undo);
+                undo.executer();                
                 zdt.actualiserContenu();
             }
         });
@@ -165,9 +157,9 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Redo redo = new Redo(edt);
+            	zdt.actualiserSelection();
+            	Redo redo = new Redo(edt);edt.addAction(redo);
                 redo.executer();
-                edt.addAction(redo);
                 zdt.actualiserContenu();
             }
         });
@@ -185,14 +177,11 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                edt.setTampon(tmpTextarea.getText());
-                edt.setSelection(startIndex, endIndex);
-                zdt.insert(tmpTextarea.getText(), startIndex);
-                Ecrire ecrire = new Ecrire(edt);
-                ecrire.executer();
-                edt.addAction(ecrire);
+            	zdt.actualiserSelection();
+            	edt.setTampon(tmpTextarea.getText());
+                Ecrire ecrire = new Ecrire(edt);edt.addAction(ecrire);
+                ecrire.executer();                
                 zdt.actualiserContenu();
-                tmpTextarea.setText("");
             }
         });        
         
@@ -201,69 +190,17 @@ public class EditeurDeTexteGraphique extends EditeurDeTexte {
          */
         class MyKeyListener implements KeyListener {
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
+            public void keyPressed(KeyEvent e) {}
 
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
+            public void keyReleased(KeyEvent e) {}
 
-            @Override
             public void keyTyped(KeyEvent e) {
-                zdt.setText("");
+            	e.consume();
             }
         }
 
-        /**
-         * Constructor of the internal class MyMouseListener to handle selection events
-         */
-        class MyMouseListener implements MouseListener {
-
-            @Override
-            // Get cursor position (insert action)
-            public void mouseClicked(MouseEvent arg0) {
-                startIndex  = zdt.getCaretPosition();
-                endIndex    = startIndex;
-                edt.setSelection(startIndex, endIndex); 
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent arg0) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent arg0) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                startIndex = zdt.getCaretPosition();
-            }
-
-            // Get selected text in the text area
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (zdt.getSelectedText() != null) {
-                    endIndex = zdt.getCaretPosition();
-                    autoSwitchIndex();
-                    edt.setSelection(startIndex, endIndex);
-                }
-            }
-
-            public void autoSwitchIndex() {
-                if (startIndex > endIndex) {
-                    int tmp = startIndex;
-                    startIndex = endIndex;
-                    endIndex = tmp;
-                }
-            }
-        }
-
-        MyMouseListener mml = new MyMouseListener();
         MyKeyListener kl = new MyKeyListener();
 
-        zdt.addMouseListener(mml);
         zdt.addKeyListener(kl);
 
         fenetre.add(grid, BorderLayout.NORTH);

@@ -2,9 +2,9 @@ package miniEditeur;
 
 public class RetourArriere extends ActionReversible{
 	
-	Selection s;
-	Buffer old;
-	Boolean invalid;
+	private Selection s;
+	private Buffer old;
+	private Boolean invalid;
 	
 	public RetourArriere(EditeurDeTexte e){
 		super(e);
@@ -50,5 +50,26 @@ public class RetourArriere extends ActionReversible{
     public String toString(){
 		return "RetourArriere";
     }
+    
+    private void setSelection(Selection selection){
+    	this.s=selection;
+    }
+    
+    private void setBuffer(Buffer buffer){
+    	this.old=buffer;
+    } 
+    
+    private void setInvalid(Boolean inv){
+    	this.invalid=inv;
+    }
+    
+	public Action clone() {
+		RetourArriere a = new RetourArriere(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setSelection(new Selection(this.s));
+		a.setBuffer(new Buffer(this.old));
+		a.setInvalid(new Boolean(this.invalid));		
+		return a;
+	}
 	
 }

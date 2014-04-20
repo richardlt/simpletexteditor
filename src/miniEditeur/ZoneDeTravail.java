@@ -84,12 +84,7 @@ public class ZoneDeTravail {
 		}
 		return "Presse papier : "+this.pressePapier.toString()+" "+this.selection.toString()+"\n"+this.buffer.toString()+"\n"+temp;
 		
-	}
-        
-	public String print(){
-            return this.buffer.toString();		
-	}
-        
+	}        
 
 	public void retourArriere() {
 		if(!this.selection.isCursor()){

@@ -45,5 +45,21 @@ public class Couper extends ActionReversible {
     public String toString(){
 		return "Couper";
     }
+    
+    private void setSelection(Selection selection){
+    	this.s=selection;
+    }
+    
+    private void setBuffer(Buffer buffer){
+    	this.old=buffer;
+    } 
+    
+	public Action clone() {
+		Couper a = new Couper(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setSelection(new Selection(this.s));
+		a.setBuffer(new Buffer(this.old));	
+		return a;
+	}
 
 }

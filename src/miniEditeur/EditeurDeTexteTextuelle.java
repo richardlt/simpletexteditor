@@ -22,6 +22,9 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 			System.out.println("cp : copier la selection (précisez la selection avant de copier)");
 			System.out.println("p : coller la selection (précisez la selection avant de coller)");
 			System.out.println("cu : couper la selection (précisez la selection avant de couper)");
+			System.out.println("rec : commencer a enregister une serie d'actions");
+			System.out.println("stop : arreter l'enregistrement");
+			System.out.println("replay : rejouer la dernière serie enregistée");
 			System.out.println("u : defaire");
 			System.out.println("r : refaire");
 			
@@ -61,6 +64,12 @@ public class EditeurDeTexteTextuelle extends EditeurDeTexte{
 			}else if(str.equals("r")){
 				Action a=new Redo(this);super.addAction(a);
 				a.executer();
+			}else if(str.equals("rec")){
+				super.startRecord();
+			}else if(str.equals("stop")){
+				super.stopRecord();
+			}else if(str.equals("replay")){
+				super.replay();
 			}
 		}
 	}

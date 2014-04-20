@@ -39,5 +39,16 @@ public class Undo extends ActionReversion {
 		if(this.action!=null){return "Undo("+this.action.toString()+")";}
 		else{return "Undo";}
     }
+    
+    private void setAction(Action a){
+    	super.action=a;
+    }
+        
+	public Action clone() {
+		Undo a = new Undo(super.editeurDeTexte);
+		a.state = new Integer(this.state);
+		a.setAction(super.action.clone());
+		return a;
+	}
 
 }
